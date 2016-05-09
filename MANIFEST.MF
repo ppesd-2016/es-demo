@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Class-Path: . esdemo_lib/antlr-runtime-3.5.jar esdemo_lib/aopalliance-
+ 1.0.jar esdemo_lib/asm-4.1.jar esdemo_lib/asm-commons-4.1.jar esdemo_
+ lib/classmate-1.1.0.jar esdemo_lib/elasticsearch-1.4.4.jar esdemo_lib
+ /freemarker-2.3.23.jar esdemo_lib/groovy-all-2.3.2.jar esdemo_lib/ham
+ crest-core-1.3.jar esdemo_lib/hamcrest-library-1.3.jar esdemo_lib/hib
+ ernate-validator-5.2.4.Final.jar esdemo_lib/jackson-annotations-2.6.5
+ .jar esdemo_lib/jackson-core-2.6.5.jar esdemo_lib/jackson-databind-2.
+ 6.5.jar esdemo_lib/jboss-logging-3.3.0.Final.jar esdemo_lib/jcl-over-
+ slf4j-1.7.16.jar esdemo_lib/jna-4.1.0.jar esdemo_lib/jts-1.13.jar esd
+ emo_lib/jul-to-slf4j-1.7.16.jar esdemo_lib/junit-4.12.jar esdemo_lib/
+ log4j-1.2.17.jar esdemo_lib/log4j-over-slf4j-1.7.16.jar esdemo_lib/lo
+ gback-classic-1.1.5.jar esdemo_lib/logback-core-1.1.5.jar esdemo_lib/
+ lucene-analyzers-common-4.10.3.jar esdemo_lib/lucene-core-4.10.3.jar 
+ esdemo_lib/lucene-expressions-4.10.3.jar esdemo_lib/lucene-grouping-4
+ .10.3.jar esdemo_lib/lucene-highlighter-4.10.3.jar esdemo_lib/lucene-
+ join-4.10.3.jar esdemo_lib/lucene-memory-4.10.3.jar esdemo_lib/lucene
+ -misc-4.10.3.jar esdemo_lib/lucene-queries-4.10.3.jar esdemo_lib/luce
+ ne-queryparser-4.10.3.jar esdemo_lib/lucene-sandbox-4.10.3.jar esdemo
+ _lib/lucene-spatial-4.10.3.jar esdemo_lib/lucene-suggest-4.10.3.jar e
+ sdemo_lib/mockito-core-1.10.19.jar esdemo_lib/objenesis-2.1.jar esdem
+ o_lib/sigar-1.6.4.jar esdemo_lib/slf4j-api-1.6.2.jar esdemo_lib/slf4j
+ -api-1.7.16.jar esdemo_lib/snakeyaml-1.16.jar esdemo_lib/spatial4j-0.
+ 4.1.jar esdemo_lib/spring-aop-4.2.5.RELEASE.jar esdemo_lib/spring-bea
+ ns-4.2.5.RELEASE.jar esdemo_lib/spring-boot-1.3.3.RELEASE.jar esdemo_
+ lib/spring-boot-autoconfigure-1.3.3.RELEASE.jar esdemo_lib/spring-boo
+ t-starter-1.3.3.RELEASE.jar esdemo_lib/spring-boot-starter-freemarker
+ -1.3.3.RELEASE.jar esdemo_lib/spring-boot-starter-logging-1.3.3.RELEA
+ SE.jar esdemo_lib/spring-boot-starter-tomcat-1.3.3.RELEASE.jar esdemo
+ _lib/spring-boot-starter-validation-1.3.3.RELEASE.jar esdemo_lib/spri
+ ng-boot-starter-web-1.3.3.RELEASE.jar esdemo_lib/spring-context-4.2.5
+ .RELEASE.jar esdemo_lib/spring-context-support-4.2.5.RELEASE.jar esde
+ mo_lib/spring-core-4.2.5.RELEASE.jar esdemo_lib/spring-expression-4.2
+ .5.RELEASE.jar esdemo_lib/spring-test-4.2.5.RELEASE.jar esdemo_lib/sp
+ ring-web-4.2.5.RELEASE.jar esdemo_lib/spring-webmvc-4.2.5.RELEASE.jar
+  esdemo_lib/tomcat-embed-core-8.0.32.jar esdemo_lib/tomcat-embed-el-8
+ .0.32.jar esdemo_lib/tomcat-embed-logging-juli-8.0.32.jar esdemo_lib/
+ tomcat-embed-websocket-8.0.32.jar esdemo_lib/validation-api-1.1.0.Fin
+ al.jar
+Main-Class: com.ts.esdemo.ESDemoApp
+
