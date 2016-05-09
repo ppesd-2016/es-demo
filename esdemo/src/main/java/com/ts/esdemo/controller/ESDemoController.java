@@ -1,8 +1,8 @@
 package com.ts.esdemo.controller;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
@@ -46,7 +46,7 @@ public class ESDemoController {
 		SearchResponse response = requestBuilder.setTypes("company").setSearchType(SearchType.QUERY_AND_FETCH)
 				.setQuery(QueryBuilders.matchQuery("name", text)).execute().actionGet();
 		SearchHits hits = response.getHits();
-
+		List<Company> companies = new ArrayList<Company>();
 		for (SearchHit eachHit : hits.getHits()) {
 			Map<String, Object> fields = eachHit.getSource();
 
@@ -58,17 +58,17 @@ public class ESDemoController {
 			company.setSector(blankIfNull((String) fields.get("sector")));
 			company.setRegnumber(blankIfNull((String) fields.get("reg_number")));
 
-			model.put("companies", Collections.singletonList(company));
-			model.put("searchValue", text);
-			model.put("searchBy", "company");
+			companies.add(company);
 		}
+		model.put("companies", companies);
+		model.put("searchValue", text);
+		model.put("searchBy", "company");
 		return "searchresult";
 	}
 
 	@RequestMapping("/welcome")
 	public String welcome(Map<String, Object> model) {
-		model.put("time", new Date());
-		model.put("message", "ES Demo");
+		model.put("message", "Elasticsearch in practice");
 		return "welcome";
 	}
 

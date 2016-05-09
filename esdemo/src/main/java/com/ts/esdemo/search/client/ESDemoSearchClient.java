@@ -27,7 +27,7 @@ public class ESDemoSearchClient {
 	private String[] esClusterNodes;
 
 	@PostConstruct
-	public void initializeTransportClient() {
+	public void initializeTransportClient() throws Exception {
 		logger.debug("Initializing search client.");
 		try {
 			Builder settingsBuilder = ImmutableSettings.settingsBuilder();
