@@ -1,0 +1,120 @@
+{
+  "index": {
+    "analysis": {
+      "char_filter": {
+        "replace_zeros_pattern": {
+          "pattern": "^0*",
+          "type": "pattern_replace",
+          "replacement": ""
+        },
+        "my_mapping": {
+          "type": "mapping",
+          "mappings": [
+            "-=>"
+          ]
+        }
+      },
+      "filter": {
+        "ngram_filter": {
+          "type": "nGram",
+          "min_gram": "2",
+          "max_gram": "8"
+        },
+        "autocomplete_ngram": {
+          "min_gram": "1",
+          "type": "edge_ngram",
+          "max_gram": "15"
+        }
+      },
+      "analyzer": {
+        "autocomplete_index": {
+          "filter": [
+            "autocomplete_ngram"
+          ],
+          "tokenizer": "keyword"
+        },
+        "autocomplete_search": {
+          "filter": [
+            "ngram_filter"
+          ],
+          "tokenizer": "keyword"
+        },
+        "ngram_search": {
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        },
+        "ucn_pattern_search": {
+          "char_filter": [
+            "my_mapping"
+          ],
+          "filter": [
+            "trim",
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        },
+        "remove_leading_zeros_index": {
+          "char_filter": [
+            "replace_zeros_pattern"
+          ],
+          "filter": [
+            "trim"
+          ],
+          "tokenizer": "keyword"
+        },
+        "ucn_pattern_index": {
+          "char_filter": [
+            "my_mapping"
+          ],
+          "filter": [
+            "trim",
+            "lowercase",
+            "autocomplete_ngram"
+          ],
+          "tokenizer": "keyword"
+        },
+        "trim_spaces_search": {
+          "filter": [
+            "trim",
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        },
+        "ngram_index": {
+          "filter": [
+            "ngram_filter",
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        },
+        "lowercase_analyzer": {
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        },
+        "remove_leading_zeros_search": {
+          "char_filter": [
+            "replace_zeros_pattern"
+          ],
+          "filter": [
+            "trim"
+          ],
+          "tokenizer": "keyword"
+        },
+        "trim_spaces_index": {
+          "filter": [
+            "trim",
+            "lowercase"
+          ],
+          "tokenizer": "keyword"
+        }
+      }
+    },
+    "version": {
+      "created": "1040499"
+    }
+  }
+}
