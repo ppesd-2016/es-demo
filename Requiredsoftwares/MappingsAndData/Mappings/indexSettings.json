@@ -29,12 +29,14 @@
       "analyzer": {
         "autocomplete_index": {
           "filter": [
+		    "lowercase",
             "autocomplete_ngram"
           ],
           "tokenizer": "keyword"
         },
         "autocomplete_search": {
           "filter": [
+		   "lowercase",
             "ngram_filter"
           ],
           "tokenizer": "keyword"
