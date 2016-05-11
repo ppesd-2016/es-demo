@@ -1,6 +1,6 @@
 package com.ts.esdemo.model;
 
-public class People {
+public class Employee {
 
 	private String fullName;
 	private String firstName;

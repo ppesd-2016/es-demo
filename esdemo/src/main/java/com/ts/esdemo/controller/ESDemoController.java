@@ -10,7 +10,6 @@ import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ts.esdemo.model.Company;
+import com.ts.esdemo.model.DocumentType;
 import com.ts.esdemo.search.client.ESDemoSearchClient;
 
 @Controller
@@ -33,11 +32,7 @@ public class ESDemoController {
 	@Autowired
 	private ESDemoSearchClient client;
 
-	private static final String ES_INDEX_NAME = "fakecompany";
-
-	private enum DocumentTypes {
-		company, employee, stock
-	}
+	private static final String ES_INDEX_NAME = "fake_company";
 
 	@RequestMapping("/clusterhealth")
 	public String getClusterHealth() {
@@ -47,53 +42,56 @@ public class ESDemoController {
 		return response.toString();
 	}
 
-	@RequestMapping(value = "/search/company", method = RequestMethod.GET)
-	public String searchCompanies(@RequestParam("text") String text, Map<String, Object> model) throws IOException {
-		logger.debug("Recieved search request for company: " + text);
-		SearchRequestBuilder requestBuilder = this.client.getClient().prepareSearch(ES_INDEX_NAME);
-		requestBuilder.setTypes(DocumentTypes.company.toString()).setSearchType(SearchType.QUERY_AND_FETCH)
-				.setQuery(QueryBuilders.matchQuery("name", text));
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String searchCompanies(@RequestParam(value = "type", defaultValue = "global") DocumentType type,
+			@RequestParam("text") String text, Map<String, Object> model) throws IOException {
+		logger.debug("Recieved search request for : " + text + " and type: " + type);
+
+		// form the request
+		SearchRequestBuilder requestBuilder = getRequestBuilder(ES_INDEX_NAME);
+		type.setSearchQuery(requestBuilder, text);
+		requestBuilder.setSearchType(SearchType.QUERY_AND_FETCH);
 		logger.info("Search request query: " + requestBuilder.toString());
+
+		// execute the request and process the response
 		SearchResponse response = requestBuilder.execute().actionGet();
-		SearchHits hits = response.getHits();
-		List<Company> companies = new ArrayList<Company>();
-		for (SearchHit eachHit : hits.getHits()) {
-			Map<String, Object> fields = eachHit.getSource();
+		type.processSearchResponse(response, model, text, type);
 
-			Company company = new Company();
-			company.setName(blankIfNull(fields.get("name")));
-			company.setCode(blankIfNull(fields.get("code")));
-			company.setUrl(blankIfNull(fields.get("url")));
-			company.setEmail(blankIfNull(fields.get("email")));
-			company.setSector(blankIfNull(fields.get("sector")));
-			company.setRegnumber(blankIfNull(fields.get("reg_number")));
-
-			companies.add(company);
-		}
-		model.put("companies", companies);
-		model.put("searchValue", text);
-		model.put("searchBy", "company");
 		return "searchresult";
 	}
 
 	@RequestMapping(value = "/suggest", method = RequestMethod.GET)
 	public String suggest(@RequestParam("text") String text, Map<String, Object> model) throws IOException {
 		logger.debug("Received suggestion request for: " + text);
-		SearchRequestBuilder requestBuilder = this.client.getClient().prepareSearch(ES_INDEX_NAME);
-		requestBuilder.setQuery(QueryBuilders.queryString(text));
+
+		// for the request
+		SearchRequestBuilder requestBuilder = getRequestBuilder(ES_INDEX_NAME);
+		DocumentType.global.setSuggestQuery(requestBuilder, text);
 		logger.info("Auto suggest query: " + requestBuilder.toString());
+
+		// execute the request and process the response
 		SearchResponse response = requestBuilder.execute().actionGet();
 		SearchHits hits = response.getHits();
+		logger.debug("Suggest query returned: " + hits.getTotalHits() + " record(s).");
 		List<String> result = new ArrayList<String>();
 		for (SearchHit eachHit : hits.getHits()) {
+			String type = eachHit.getType();
 			Map<String, Object> fields = eachHit.getSource();
-			Object value = fields.get("name");
+			Object value = DocumentType.company.toString().equals(type) ? fields.get("name") : fields.get("fullname");
 			if (value != null) {
-				result.add((String) value);
+				result.add(value + "(" + type + ")");
 			}
 		}
 		model.put("autoSuggest", result);
 		return "autosuggest";
+	}
+
+	private SearchRequestBuilder getRequestBuilder(String index, String... types) {
+		SearchRequestBuilder requestBuilder = this.client.getClient().prepareSearch(index);
+		if (types != null && types.length > 0) {
+			requestBuilder.setTypes(types);
+		}
+		return requestBuilder;
 	}
 
 	@RequestMapping("/welcome")
@@ -102,10 +100,4 @@ public class ESDemoController {
 		return "welcome";
 	}
 
-	private String blankIfNull(Object value) {
-		if (value == null) {
-			return "";
-		}
-		return (String) value;
-	}
 }
