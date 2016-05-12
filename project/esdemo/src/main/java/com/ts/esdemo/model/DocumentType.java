@@ -128,9 +128,9 @@ public enum DocumentType {
 
 		// TODO: there is a mapping issue for these fields
 		// employee.setAge(age);
-		// employee.setContactNumber(contactNumber);
-		// employee.setCompanyCode(companyCode);
-		// employee.setEmployeeId(employeeId);
+		 employee.setContactNumber(blankIfNull(fields.get("phoneNo")));
+		 employee.setCompanyCode(blankIfNull(fields.get("companycode")));
+		 employee.setEmployeeId(blankIfNull(fields.get("employeeid")));
 		// employee.setPersonalEmail(personalEmail);
 
 		return employee;

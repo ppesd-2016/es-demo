@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
@@ -45,6 +47,7 @@ public class ESDemoController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchCompanies(@RequestParam(value = "type", defaultValue = "global") DocumentType type,
 			@RequestParam("text") String text, Map<String, Object> model) throws IOException {
+		
 		logger.debug("Recieved search request for : " + text + " and type: " + type);
 
 		// form the request
@@ -60,6 +63,25 @@ public class ESDemoController {
 		return "searchresult";
 	}
 
+	
+	@RequestMapping(value = "/search/employeesbycompany", method = RequestMethod.GET)
+	public String searchEmployeesByCompany(@RequestParam(value = "type", defaultValue = "global") DocumentType type,
+			@RequestParam("text") String text, Map<String, Object> model) throws IOException {
+
+		logger.debug("Recieved search request for : " + text + " and type: " + type);
+		SearchRequestBuilder requestBuilder = getRequestBuilder(ES_INDEX_NAME,type.toString());
+		requestBuilder.setSearchType(SearchType.QUERY_AND_FETCH);
+				
+		requestBuilder.setQuery(QueryBuilders.matchQuery("companycode", text));
+		logger.info("Search request query: " + requestBuilder.toString());
+		// execute the request and process the response
+		SearchResponse response = requestBuilder.execute().actionGet();
+		type.processSearchResponse(response, model, text, type);
+				
+		return "employees";
+
+	}
+	
 	@RequestMapping(value = "/suggest", method = RequestMethod.GET)
 	public String suggest(@RequestParam("text") String text, Map<String, Object> model) throws IOException {
 		logger.debug("Received suggestion request for: " + text);
