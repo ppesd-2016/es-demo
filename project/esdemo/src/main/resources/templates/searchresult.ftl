@@ -30,7 +30,7 @@
   					<td>${company.email!}</td> 
   					<td>${company.sector!}</td> 
   					<td>${company.regnumber!}</td> 
-  					<td> <button type="button" data-toggle="modal" data-target="#myEmployees" class="btn btn-default" onclick=callElastic1(${company.code}); >Show Employees</button></td>
+  					<td> <button type="button" data-toggle="modal" data-target="#myEmployees" class="btn btn-default" onclick=searchEmployeesByCompany('${company.code}'); >Show Employees</button></td>
   				</tr>
          	</#list> 
           	</tbody>

@@ -7,12 +7,12 @@ globalSearchBox.onkeyup = function() {
 		document.getElementById("searchResultDatalist").innerHTML='';
 	}	
 }
-function callElastic(){
+function search(){
 var searchBy= document.querySelector('input[name="searchBy"]:checked').value
 var url= "search?text="+globalSearchBox.value+"&type="+searchBy;
 makeAjaxGETCall(url,"searchResultTable");
 }
-function callElastic1(companycode){
+function searchEmployeesByCompany(companycode){
 var url= "search/employeesbycompany?text="+companycode+"&type=employee";
 makeAjaxGETCall(url,"showEmployeesContent");
 }

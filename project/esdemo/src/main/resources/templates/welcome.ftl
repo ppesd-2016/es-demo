@@ -26,7 +26,7 @@ Elastic Search Demo
         <input type="radio" name="searchBy" value="employee" autocomplete="off">
         <label>Both</label>
         <input type="radio" name="searchBy" value="global" autocomplete="off">
-		<input type="submit" value="Search" onclick="callElastic();" class="btn btn-default">		
+		<input type="submit" value="Search" onclick="search();" class="btn btn-default">		
 	</div> 
      
    </div>
