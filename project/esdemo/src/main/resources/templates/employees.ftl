@@ -2,7 +2,7 @@
   <div class="row" style="height:100%">
       <div class="panel panel-default" style="height:95%">
 
-        <#if employees?? && employees?has_content>
+      <#if employees?? && employees?has_content>
        <div id="showEmployeedDiv">
         <table class="table table-striped">
           <thead>
@@ -37,7 +37,7 @@
           </tbody>
         </table>
         </div>
-         <#elseif searchBy == "employee">>
+         <#elseif searchBy == "employee">
     			No employee was found.
         </#if>
       </div>
