@@ -78,7 +78,7 @@
           </tbody>
         </table>
         </div>
-         <#elseif searchBy == "employee">>
+         <#elseif searchBy == "employee">
     			No employee was found.
         </#if>
        </#if>
