@@ -77,6 +77,7 @@ public enum DocumentType {
 
 		List<Company> companies = new ArrayList<Company>();
 		List<Employee> employees = new ArrayList<Employee>();
+		List<Stockprice> stockprices = new ArrayList<Stockprice>();
 
 		for (SearchHit eachHit : hits.getHits()) {
 			Map<String, Object> fields = eachHit.getSource();
@@ -88,6 +89,10 @@ public enum DocumentType {
 			}
 			case employee: {
 				employees.add(createEmployee(fields));
+				break;
+			}
+			case stock : {
+				stockprices.add(createStockPrice(fields));
 				break;
 			}
 			default: {
@@ -102,8 +107,19 @@ public enum DocumentType {
 		if (employees.size() > 0) {
 			model.put("employees", employees);
 		}
+		if(stockprices.size()>0){
+			model.put("stockprices",stockprices);
+		}
 		model.put("searchValue", searchText);
 		model.put("searchBy", searchType.toString());
+	}
+
+	private Stockprice createStockPrice(Map<String, Object> fields) {
+		Stockprice stock = new Stockprice();
+		stock.setCompanyCode(blankIfNull(fields.get("companycode")));
+		stock.setDate(blankIfNull(fields.get("date")));
+		stock.setStockprice(blankIfNull(fields.get("stockprice")));
+		return stock;
 	}
 
 	private Company createCompany(Map<String, Object> fields) {
