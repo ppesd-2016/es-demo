@@ -81,6 +81,25 @@ public class ESDemoController {
 
 	}
 	
+	@RequestMapping(value = "/search/stockpricebycompany", method = RequestMethod.GET)
+	public String searchStockpriceByCompany(@RequestParam(value = "type", defaultValue = "global") DocumentType type,
+			@RequestParam("text") String text, Map<String, Object> model) throws IOException {
+
+		logger.debug("Recieved stock price search request for : " + text + " and type: " + type);
+		SearchRequestBuilder requestBuilder = getRequestBuilder(ES_INDEX_NAME,type.toString());
+		requestBuilder.setSearchType(SearchType.QUERY_AND_FETCH);
+				
+		requestBuilder.setQuery(QueryBuilders.matchQuery("companycode", text));
+		requestBuilder.setSize(5000);
+		
+		logger.info("Search request query: " + requestBuilder.toString());
+		// execute the request and process the response
+		SearchResponse response = requestBuilder.execute().actionGet();
+		type.processSearchResponse(response, model, text, type);
+				
+		return "stockprice";
+	}
+	
 	@RequestMapping(value = "/suggest", method = RequestMethod.GET)
 	public String suggest(@RequestParam("text") String text, Map<String, Object> model) throws IOException {
 		logger.debug("Received suggestion request for: " + text);
