@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -19,7 +20,7 @@ public enum DocumentType {
 		@Override
 		public void setSearchQuery(SearchRequestBuilder requestBuilder, String text) {
 			requestBuilder.setTypes(toString());
-			requestBuilder.setQuery(QueryBuilders.matchQuery("name", text));
+			requestBuilder.setQuery(QueryBuilders.matchQuery("name", QueryParser.escape(text)));
 		}
 
 		@Override
@@ -31,7 +32,7 @@ public enum DocumentType {
 		@Override
 		public void setSearchQuery(SearchRequestBuilder requestBuilder, String text) {
 			requestBuilder.setTypes(toString());
-			requestBuilder.setQuery(QueryBuilders.matchQuery("firstname", text));
+			requestBuilder.setQuery(QueryBuilders.matchQuery("firstname", QueryParser.escape(text)));
 		}
 
 		@Override
@@ -52,13 +53,13 @@ public enum DocumentType {
 	global {
 		@Override
 		public void setSearchQuery(SearchRequestBuilder requestBuilder, String text) {
-			requestBuilder.setQuery(QueryBuilders.queryString(text).field("company.name").defaultOperator(Operator.OR)
+			requestBuilder.setQuery(QueryBuilders.queryString(QueryParser.escape(text)).field("company.name").defaultOperator(Operator.OR)
 					.field("employee.firstname"));
 		}
 
 		@Override
 		public void setSuggestQuery(SearchRequestBuilder requestBuilder, String text) {
-			requestBuilder.setQuery(QueryBuilders.queryString(text).field("company.name.name_autoc")
+			requestBuilder.setQuery(QueryBuilders.queryString(QueryParser.escape(text)).field("company.name.name_autoc")
 					.defaultOperator(Operator.OR).field("employee.fullname.fullname_autoc"));
 		}
 
