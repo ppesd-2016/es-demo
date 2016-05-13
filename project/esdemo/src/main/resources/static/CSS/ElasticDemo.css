@@ -16,8 +16,12 @@ body {
     .custom-class {
         width: 97%;
         margin: 30px auto;
-        /* either % (e.g. 60%) or px (400px) */
+        overflow-y: initial !important
     }
+    .modal-body{
+	    height: 500px;
+	    overflow-y: auto;
+	}
 }
 
 #entireContent{

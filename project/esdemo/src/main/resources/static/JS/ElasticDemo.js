@@ -16,6 +16,10 @@ function searchEmployeesByCompany(companycode){
 var url= "search/employeesbycompany?text="+companycode+"&type=employee";
 makeAjaxGETCall(url,"showEmployeesContent");
 }
+function searchStockpriceByCompany(companycode){
+	var url= "search/stockpricebycompany?text="+companycode+"&type=stock";
+	makeAjaxGETCall(url,"showStockPrices");
+} 
 function makeAjaxGETCall(url,id){	
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {

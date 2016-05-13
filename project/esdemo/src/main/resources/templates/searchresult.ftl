@@ -19,6 +19,7 @@
   					<th>Sector</th> 
   					<th>Regnumber</th> 
   					<th>Show Employees</th>  
+  					<th>Stock Price</th>
  			 	</tr>
           	</thead>
         	<tbody>  
@@ -31,6 +32,7 @@
   					<td>${company.sector!}</td> 
   					<td>${company.regnumber!}</td> 
   					<td> <button type="button" data-toggle="modal" data-target="#myEmployees" class="btn btn-default" onclick=searchEmployeesByCompany('${company.code}'); >Show Employees</button></td>
+  					<td> <button type="button" data-toggle="modal" data-target="#stockPrice" class="btn btn-default" onclick=searchStockpriceByCompany('${company.code}'); >Get Stock price</button></td>
   				</tr>
          	</#list> 
           	</tbody>
@@ -95,6 +97,27 @@
 
             </div>
             <div class="modal-body" id="showEmployeesContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="stockPrice">
+    <div class="custom-class">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title" id="myModalLabel">Stock Price</h4>
+
+            </div>
+            <div class="modal-body" id="showStockPrices">
+            
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
