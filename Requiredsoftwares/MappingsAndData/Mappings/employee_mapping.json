@@ -9,7 +9,7 @@
             "type": "string"
           },
           "age": {
-            "type": "string"
+            "type": "integer"
           },
           "personalemail": {
             "type": "string"
