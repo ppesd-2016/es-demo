@@ -1,15 +1,17 @@
 var globalSearchBox= document.getElementById('globalSearchBox');
-globalSearchBox.onkeyup = function() {
-	if(globalSearchBox.value.length>=4){
-		makeAjaxGETCall("suggest?text="+globalSearchBox.value,"searchResultDatalist");	
+globalSearchBox.onkeyup = function(e) {
+	var value= (globalSearchBox.value).replace(/\(company\)/i,"").replace(/\(employee\)/i,"");
+	if(e.keyCode!==40 && e.keyCode!==38 && e.keyCode!==13 && globalSearchBox.value.length>=4){
+		makeAjaxGETCall("suggest?text="+value,"searchResultDatalist");	
 	}
 	else if(globalSearchBox.value.length<4){
 		document.getElementById("searchResultDatalist").innerHTML='';
-	}	
+	}
 }
 function search(){
-var searchBy= document.querySelector('input[name="searchBy"]:checked').value
-var url= "search?text="+globalSearchBox.value+"&type="+searchBy;
+var searchBy= document.querySelector('input[name="searchBy"]:checked').value;
+var value= (globalSearchBox.value).replace(/\(company\)/i,"").replace(/\(employee\)/i,"");
+var url= "search?text="+value+"&type="+searchBy;
 makeAjaxGETCall(url,"searchResultTable");
 }
 function searchEmployeesByCompany(companycode){
