@@ -6,9 +6,10 @@
              You Searched for <b>${searchValue}</b>. Below are the resulting <b><#if searchBy == "company">Companies<#elseif searchBy == "employee"> Employees <#else>Companies and Employees</#if></b>
           </h4>
         </div>
+        <div id="searchTableDiv"> 
        <#if searchBy == "company" || searchBy == "global"> 
        	<#if companies?? && companies?has_content>
-      	 <div id="searchTableDiv">
+      	 <div>
        	 <table class="table table-striped">
          	 <thead>
              	<tr>
@@ -44,7 +45,7 @@
        </#if>
        <#if  searchBy == "employee"|| searchBy == "global"> 
         <#if employees?? && employees?has_content>
-       <div id="searchTableDiv">
+       <div>
         <table class="table table-striped">
           <thead>
               <tr>
@@ -87,7 +88,7 @@
       	 No Companies and Employees Found.
       	 </div>
       	</#if>
-      	
+      	</div>
  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="myEmployees">
     <div class="custom-class">
         <div class="modal-content">
