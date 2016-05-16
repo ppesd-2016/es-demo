@@ -21,7 +21,7 @@
           "max_gram": "8"
         },
         "autocomplete_ngram": {
-          "min_gram": "1",
+          "min_gram": "2",
           "type": "edge_ngram",
           "max_gram": "15"
         }
@@ -37,7 +37,7 @@
         "autocomplete_search": {
           "filter": [
 		   "lowercase",
-            "ngram_filter"
+            "autocomplete_ngram"
           ],
           "tokenizer": "keyword"
         },
