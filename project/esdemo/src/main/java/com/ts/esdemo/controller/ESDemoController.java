@@ -33,7 +33,7 @@ public class ESDemoController {
 	@Autowired
 	private ESDemoSearchClient client;
 
-	private static final String ES_INDEX_NAME = "fakecompany";
+	private static final String ES_INDEX_NAME = "fake_company";
 
 	@RequestMapping("/clusterhealth")
 	public String getClusterHealth() {

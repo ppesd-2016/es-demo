@@ -130,7 +130,7 @@ public enum DocumentType {
 		company.setUrl(blankIfNull(fields.get("url")));
 		company.setEmail(blankIfNull(fields.get("email")));
 		company.setSector(blankIfNull(fields.get("sector")));
-		company.setRegnumber(blankIfNull(fields.get("reg_number")));
+		company.setRegnumber(blankIfNull(fields.get("regNumber")));
 		return company;
 	}
 
@@ -144,11 +144,11 @@ public enum DocumentType {
 		employee.setWorkEmail(blankIfNull(fields.get("workemail")));
 
 		// TODO: there is a mapping issue for these fields
-		// employee.setAge(age);
+		// employee.setAge(Integer.parseInt((String) fields.get("age")));
 		 employee.setContactNumber(blankIfNull(fields.get("phoneNo")));
 		 employee.setCompanyCode(blankIfNull(fields.get("companycode")));
 		 employee.setEmployeeId(blankIfNull(fields.get("employeeid")));
-		// employee.setPersonalEmail(personalEmail);
+		 employee.setPersonalEmail(blankIfNull(fields.get("personalemail")));
 
 		return employee;
 	}
